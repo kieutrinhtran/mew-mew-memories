@@ -36,7 +36,7 @@ npm run serve
 ```bash
 npm run build
 ```
-####🧼 Lint and fix files
+#### 🧼 Lint and fix files
 ```bash
 npm run lint -- --fix
 ```
