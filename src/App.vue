@@ -1,26 +1,89 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Welcome to Your Vue.js App" />
+  <main-screen
+    v-if="statusMatch === 'default'"
+    @onStart="onHandleBeforeStart($event)"
+  />
+  <interact-screen
+    v-if="statusMatch === 'match'"
+    :cardsContext="settings.cardsContext"
+    @onFinish="onGetResult"
+  />
+  <result-screen
+    v-if="statusMatch === 'result'"
+    :timer="timer"
+    @onStartAgain="statusMatch = 'default'"
+  />
+  <!-- Hiện copyright nếu đang ở màn hình chính -->
+  <p class="copyright" v-if="statusMatch === 'default'">
+    © 2025 - This flip card game was created to support the presentation of
+    Group 3 for the Web Application Development course at UEH
+  </p>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import MainScreen from "./components/MainScreen.vue";
+import InteractScreen from "./components/InteractScreen.vue";
+import ResultScreen from "./components/ResultScreen.vue";
+
+import { shuffled } from "./utils/array";
 
 export default {
   name: "App",
   components: {
-    HelloWorld,
+    MainScreen,
+    InteractScreen,
+    ResultScreen,
+  },
+  data() {
+    return {
+      settings: {
+        totalOfBlocks: 0,
+        cardsContext: [],
+        startedAt: null,
+      },
+      timer: 0,
+      statusMatch: "default",
+    };
+  },
+  methods: {
+    onHandleBeforeStart(configs) {
+      this.settings.totalOfBlocks = configs.totalOfBlocks;
+
+      const firstCards = Array.from(
+        { length: this.settings.totalOfBlocks / 2 },
+        (_, i) => i + 1
+      );
+      const secondCards = [...firstCards];
+      const cards = [...firstCards, ...secondCards];
+
+      this.settings.cardsContext = shuffled(shuffled(shuffled(cards)));
+      this.settings.startedAt = new Date().getTime();
+
+      this.statusMatch = "match";
+    },
+
+    onGetResult() {
+      this.statusMatch = "result";
+      this.timer = new Date().getTime() - this.settings.startedAt;
+    },
   },
 };
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style lang="css" scoped>
+.copyright {
+  font-family: "Shantell Sans", cursive;
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 1rem;
+  color: var(--light);
+  z-index: 3;
+  font-size: 0.7rem;
+  margin-top: 2rem;
+}
+
+.copyright a {
+  color: #f4dc26;
 }
 </style>

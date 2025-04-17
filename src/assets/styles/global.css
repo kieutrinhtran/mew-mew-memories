@@ -1,0 +1,20 @@
+/* variables css */
+:root {
+  --dark: #212121;
+  --light: #f5f5f5;
+  --font: "Press Start 2P", system-ui;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font);
+  font-size: 16px;
+  width: 100%;
+  background-color: var(--dark);
+  overflow-x: hidden;
+}
