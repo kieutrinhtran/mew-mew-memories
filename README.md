@@ -2,6 +2,12 @@
 
 A Vue.js memory matching game featuring **card flip animations**, **sound effects**, and **difficulty levels** (4x4, 6x6, 8x8).  
 This project was developed as part of the **Web Application Development course** at UEH University.
+## 🔗 Demo
+<p align="center">
+  <a href="https://mewflipgame.netlify.app/" target="_blank">
+    <img src="https://img.shields.io/badge/🎮%20Play%20Now-mewflipgame.netlify.app-brightgreen?style=for-the-badge" alt="Play Now Button"/>
+  </a>
+</p>
 
 ![image](https://github.com/user-attachments/assets/06f23e24-1006-4cac-8bdf-d8561463efcc)
 
@@ -40,9 +46,5 @@ npm run build
 ```bash
 npm run lint -- --fix
 ```
-#### 👨‍💻 Author
+### 👨‍💻 Author
 Made with 💖 for UEH Web App Dev Course
----
-## 🔗 Demo
-
-👉 [Play Now](https://mewflipgame.netlify.app/)
