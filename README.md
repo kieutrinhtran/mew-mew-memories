@@ -42,10 +42,7 @@ npm run lint -- --fix
 ```
 ####👨‍💻 Author
 Made with 💖 by me for UEH Web App Dev Course
+---
 ## 🔗 Demo
 
-👉 [Play Now](https://your-demo-link.com)
-
-## 🔗 Demo
-
-👉 [Play Now](https://your-demo-link.com)
+👉 [Play Now](https://mewflipgame.netlify.app/)
