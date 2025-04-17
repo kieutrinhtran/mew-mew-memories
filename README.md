@@ -40,8 +40,8 @@ npm run build
 ```bash
 npm run lint -- --fix
 ```
-####👨‍💻 Author
-Made with 💖 by me for UEH Web App Dev Course
+#### 👨‍💻 Author
+Made with 💖 for UEH Web App Dev Course
 ---
 ## 🔗 Demo
 
