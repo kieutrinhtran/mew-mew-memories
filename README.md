@@ -1,24 +1,51 @@
-# pokegame
+# Mew Memories Game 🎴
 
-## Project setup
-```
-npm install
-```
+A Vue.js memory matching game featuring **card flip animations**, **sound effects**, and **difficulty levels** (4x4, 6x6, 8x8).  
+This project was developed as part of the **Web Application Development course** at UEH University.
 
-### Compiles and hot-reloads for development
-```
+![image](https://github.com/user-attachments/assets/06f23e24-1006-4cac-8bdf-d8561463efcc)
+
+---
+
+## 🚀 Features
+
+- 🎴 Flip & match card mechanics
+- 🔊 Interactive sounds: click, win, background music
+- 🎯 Difficulty selection (Easy, Normal, Hard)
+- ⏱️ Timer-based scoring
+- 🌙 Clean UI with responsive layout
+- 🎚️ Volume control slider
+
+---
+
+## 🛠 Tech Stack
+
+- [Vue.js 3](https://vuejs.org/)
+- HTML + CSS (Scoped styling)
+- JavaScript
+
+---
+
+## 📦 Project Setup
+### 🔄 Start development server
+
+```bash
 npm run serve
 ```
-
-### Compiles and minifies for production
-```
+#### 🔧 Build for production
+```bash
 npm run build
 ```
-
-### Lints and fixes files
+####🧼 Lint and fix files
+```bash
+npm run lint -- --fix
 ```
-npm run lint
-```
+####👨‍💻 Author
+Made with 💖 by me for UEH Web App Dev Course
+## 🔗 Demo
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+👉 [Play Now](https://your-demo-link.com)
+
+## 🔗 Demo
+
+👉 [Play Now](https://your-demo-link.com)
