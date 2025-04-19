@@ -23,6 +23,26 @@
     ⬅ Back
   </button>
 
+  <!-- BACK button -->
+  <button
+    v-if="statusMatch === 'match'"
+    class="back-button"
+    @click="showConfirmExit = true"
+  >
+    ⬅ Back
+  </button>
+
+  <!-- Back Confirm Popup -->
+  <div v-if="showConfirmExit" class="popup-overlay">
+    <div class="popup">
+      <p class="popup-message">⚠ Are you sure you want to leave the game?</p>
+      <div class="popup-buttons">
+        <button class="yes-btn" @click="confirmExit">Yes</button>
+        <button class="no-btn" @click="showConfirmExit = false">No</button>
+      </div>
+    </div>
+  </div>
+
   <result-screen
     v-if="statusMatch === 'result'"
     :timer="timer"
@@ -62,6 +82,7 @@ export default {
       intervalId: null, // Thêm biến interval cho timer
       elapsedSeconds: 0, // Thời gian hiển thị cho timer
       fadeInterval: null,
+      showConfirmExit: false,
     };
   },
   methods: {
@@ -118,6 +139,20 @@ export default {
       }
 
       this.statusMatch = "default"; // Quay về màn chính
+    },
+
+    confirmExit() {
+      clearInterval(this.intervalId);
+      this.intervalId = null;
+
+      const music = this.$refs.gameMusic;
+      if (music) {
+        music.pause();
+        music.currentTime = 0;
+      }
+
+      this.statusMatch = "default";
+      this.showConfirmExit = false;
     },
 
     onGetResult() {
@@ -197,6 +232,54 @@ export default {
 }
 .back-button:hover {
   background-color: var(--light);
+  color: var(--dark);
+}
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.popup {
+  background: #1e1e1e;
+  padding: 2rem 3rem;
+  border-radius: 12px;
+  text-align: center;
+  color: var(--light);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+  font-family: "Press Start 2P", cursive;
+}
+
+.popup-message {
+  font-size: 0.85rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+  letter-spacing: 1px;
+}
+
+.popup-buttons button {
+  font-family: "Press Start 2P", cursive;
+  font-size: 0.75rem;
+  margin: 0 1rem;
+  padding: 0.7rem 1.3rem;
+  border: 1px solid var(--light);
+  background: transparent;
+  color: var(--light);
+  cursor: pointer;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.popup-buttons button:hover {
+  background: var(--light);
   color: var(--dark);
 }
 </style>
