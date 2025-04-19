@@ -35,7 +35,7 @@
   <!-- Back Confirm Popup -->
   <div v-if="showConfirmExit" class="popup-overlay">
     <div class="popup">
-      <p class="popup-message">⚠ Are you sure you want to leave the game?</p>
+      <p class="popup-message">⚠ Exit now? Your progress will be lost!</p>
       <div class="popup-buttons">
         <button class="yes-btn" @click="confirmExit">Yes</button>
         <button class="no-btn" @click="showConfirmExit = false">No</button>
@@ -249,18 +249,23 @@ export default {
 }
 
 .popup {
-  background: #1e1e1e;
-  padding: 2rem 3rem;
-  border-radius: 12px;
+  background: #2b2b2b;
+  border: 2px solid #ffffff; /* viền trắng */
+  border-radius: 16px;
+  padding: 2rem 1rem;
+  font-family: "Press Start 2P", monospace;
   text-align: center;
   color: var(--light);
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
-  font-family: "Press Start 2P", cursive;
+  max-width: 670px;
+  width: 100%;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.6),
+    /* ánh sáng trắng gần */ 0 0 24px rgba(255, 255, 255, 0.3); /* ánh sáng trắng xa hơn */
+  animation: fadeIn 0.3s ease;
 }
 
 .popup-message {
-  font-size: 0.85rem;
-  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
   line-height: 1.5;
   letter-spacing: 1px;
 }
