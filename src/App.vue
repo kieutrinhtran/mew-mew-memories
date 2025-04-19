@@ -8,7 +8,8 @@
     :cardsContext="settings.cardsContext"
     @onFinish="onGetResult"
   />
-
+  <!-- Phát nhạc khi đang chơi -->
+  <audio ref="gameMusic" src="/sounds/gameMusic.mp3" loop></audio>
   <div v-if="statusMatch === 'match'" class="timer-display">
     🕒 {{ elapsedSeconds }}s
   </div>
@@ -69,6 +70,14 @@ export default {
 
       this.elapsedSeconds = 0;
 
+      // Phát nhạc chơi game
+      const music = this.$refs.gameMusic;
+      if (music) {
+        music.currentTime = 0;
+        music.volume = 0.3;
+        music.play().catch(() => {});
+      }
+
       // Start timer
       this.intervalId = setInterval(() => {
         this.elapsedSeconds = Math.floor(
@@ -84,7 +93,12 @@ export default {
 
       // Làm tròn giây và đồng bộ
       this.elapsedSeconds = Math.round(this.timer / 1000);
-
+      // Dừng nhạc chơi game
+      const music = this.$refs.gameMusic;
+      if (music) {
+        music.pause();
+        music.currentTime = 0;
+      }
       clearInterval(this.intervalId);
       this.intervalId = null;
       this.statusMatch = "result";
