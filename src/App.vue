@@ -52,6 +52,7 @@ export default {
       statusMatch: "default",
       intervalId: null, // Thêm biến interval cho timer
       elapsedSeconds: 0, // Thời gian hiển thị cho timer
+      fadeInterval: null,
     };
   },
   methods: {
@@ -76,6 +77,15 @@ export default {
         music.currentTime = 0;
         music.volume = 0.3;
         music.play().catch(() => {});
+
+        // Fade-in: tăng volume dần lên 0.4
+        this.fadeInterval = setInterval(() => {
+          if (music.volume < 0.4) {
+            music.volume = Math.min(0.4, music.volume + 0.02);
+          } else {
+            clearInterval(this.fadeInterval);
+          }
+        }, 100); // mỗi 100ms tăng nhẹ
       }
 
       // Start timer
@@ -91,14 +101,25 @@ export default {
       const now = new Date().getTime();
       this.timer = now - this.settings.startedAt;
 
-      // Làm tròn giây và đồng bộ
+      // Đồng bộ giây
       this.elapsedSeconds = Math.round(this.timer / 1000);
-      // Dừng nhạc chơi game
+
+      // Dừng nhạc chơi game với fade-out
       const music = this.$refs.gameMusic;
       if (music) {
-        music.pause();
-        music.currentTime = 0;
+        clearInterval(this.fadeInterval); // nếu đang fade-in thì dừng lại
+
+        this.fadeInterval = setInterval(() => {
+          if (music.volume > 0) {
+            music.volume = Math.max(0, music.volume - 0.02);
+          } else {
+            clearInterval(this.fadeInterval);
+            music.pause();
+            music.currentTime = 0;
+          }
+        }, 100);
       }
+
       clearInterval(this.intervalId);
       this.intervalId = null;
       this.statusMatch = "result";
