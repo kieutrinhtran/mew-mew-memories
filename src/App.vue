@@ -8,9 +8,15 @@
     :cardsContext="settings.cardsContext"
     @onFinish="onGetResult"
   />
+
+  <div v-if="statusMatch === 'match'" class="timer-display">
+    🕒 {{ elapsedSeconds }}s
+  </div>
+
   <result-screen
     v-if="statusMatch === 'result'"
     :timer="timer"
+    :elapsedSeconds="elapsedSeconds"
     @onStartAgain="statusMatch = 'default'"
   />
   <!-- Hiện copyright nếu đang ở màn hình chính -->
@@ -43,6 +49,8 @@ export default {
       },
       timer: 0,
       statusMatch: "default",
+      intervalId: null, // Thêm biến interval cho timer
+      elapsedSeconds: 0, // Thời gian hiển thị cho timer
     };
   },
   methods: {
@@ -59,12 +67,27 @@ export default {
       this.settings.cardsContext = shuffled(shuffled(shuffled(cards)));
       this.settings.startedAt = new Date().getTime();
 
+      this.elapsedSeconds = 0;
+
+      // Start timer
+      this.intervalId = setInterval(() => {
+        this.elapsedSeconds = Math.floor(
+          (new Date().getTime() - this.settings.startedAt) / 1000
+        );
+      }, 1000);
       this.statusMatch = "match";
     },
 
     onGetResult() {
+      const now = new Date().getTime();
+      this.timer = now - this.settings.startedAt;
+
+      // Làm tròn giây và đồng bộ
+      this.elapsedSeconds = Math.round(this.timer / 1000);
+
+      clearInterval(this.intervalId);
+      this.intervalId = null;
       this.statusMatch = "result";
-      this.timer = new Date().getTime() - this.settings.startedAt;
     },
   },
 };
@@ -85,5 +108,18 @@ export default {
 
 .copyright a {
   color: #f4dc26;
+}
+
+.timer-display {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  font-size: 1.25rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  z-index: 10;
+  font-family: "Press Start 2P", cursive;
 }
 </style>

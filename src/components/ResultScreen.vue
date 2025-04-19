@@ -1,7 +1,8 @@
 <template>
   <div class="screen">
     <h1>✨ Congratulations ✨</h1>
-    <h3>{{ Math.round(timer / 920) }} seconds</h3>
+    <h3>{{ elapsedSeconds }} seconds</h3>
+
     <button @click="handleStartAgain">Start Again</button>
   </div>
 </template>
@@ -10,6 +11,10 @@
 export default {
   props: {
     timer: {
+      type: Number,
+      default: 0,
+    },
+    elapsedSeconds: {
       type: Number,
       default: 0,
     },
