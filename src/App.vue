@@ -14,6 +14,15 @@
     🕒 {{ elapsedSeconds }}s
   </div>
 
+  <!-- Hiển thị nút Back khi đang ở màn chơi -->
+  <button
+    v-if="statusMatch === 'match'"
+    class="back-button"
+    @click="onBackToMain"
+  >
+    ⬅ Back
+  </button>
+
   <result-screen
     v-if="statusMatch === 'result'"
     :timer="timer"
@@ -97,6 +106,20 @@ export default {
       this.statusMatch = "match";
     },
 
+    onBackToMain() {
+      // Nếu có nhạc hoặc timer thì tắt:
+      clearInterval(this.intervalId);
+      this.intervalId = null;
+
+      const music = this.$refs.gameMusic;
+      if (music) {
+        music.pause();
+        music.currentTime = 0;
+      }
+
+      this.statusMatch = "default"; // Quay về màn chính
+    },
+
     onGetResult() {
       const now = new Date().getTime();
       this.timer = now - this.settings.startedAt;
@@ -156,5 +179,24 @@ export default {
   border-radius: 0.5rem;
   z-index: 10;
   font-family: "Press Start 2P", cursive;
+}
+
+.back-button {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  background: transparent;
+  color: var(--light);
+  border: 1px solid var(--light);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  z-index: 1000;
+  font-family: var(--font);
+  transition: all 0.3s ease;
+}
+.back-button:hover {
+  background-color: var(--light);
+  color: var(--dark);
 }
 </style>
